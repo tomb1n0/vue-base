@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
+import ExampleComponent from './components/ExampleComponent.vue';
 
 const app = createApp({});
 
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default))
+app.component('example-component', ExampleComponent);
 
 app.mount("#app");

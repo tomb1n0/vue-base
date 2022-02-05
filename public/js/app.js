@@ -22544,14 +22544,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
+
 
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({});
-
-var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
-
-files.keys().map(function (key) {
-  return app.component(key.split('/').pop().split('.')[0], files(key)["default"]);
-});
+app.component('example-component', _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
 app.mount("#app");
 
 /***/ }),
@@ -45311,38 +45308,6 @@ function compileToFunction(template, options) {
 
 
 
-
-/***/ }),
-
-/***/ "./resources/js sync recursive \\.vue$/":
-/*!************************************!*\
-  !*** ./resources/js/ sync \.vue$/ ***!
-  \************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var map = {
-	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue"
-};
-
-
-function webpackContext(req) {
-	var id = webpackContextResolve(req);
-	return __webpack_require__(id);
-}
-function webpackContextResolve(req) {
-	if(!__webpack_require__.o(map, req)) {
-		var e = new Error("Cannot find module '" + req + "'");
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
-	}
-	return map[req];
-}
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 

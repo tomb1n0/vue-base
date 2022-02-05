@@ -15,6 +15,7 @@
                     @endif
 
                     <example-component></example-component>
+                    <fact-find-field-group></fact-find-field-group>
 
                     {{ __('You are logged in!') }}
                 </div>

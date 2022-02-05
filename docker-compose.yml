@@ -1,0 +1,90 @@
+# --------------------------------------------------------------- #
+# Template docker configuration to run a PHP project          #
+# Requires replacements for the $$<variable_name>$$ placeholders  #
+# --------------------------------------------------------------- #
+version: "3"
+
+networks:
+  traefik-network:
+    external: true
+  internal:
+    external: false
+
+services:
+  app:
+    environment:
+      COMPOSER_BRANCH: 2
+    image: rareloop/volker:php-81
+    container_name: vueplayground-app
+    tty: true
+    working_dir: /var/www
+    volumes:
+      # Mounts your ssh directory so can checkout rareloop
+      - ~/.ssh:/home/www/.ssh:delegated
+      # Using direct docker mounts
+      - ./:/var/www:delegated
+    expose:
+      - 9000
+    networks:
+      - internal
+    extra_hosts:
+      - "vueplayground.volker.test:${HOST_IP}"
+            
+
+  # Nginx to serve the app
+  nginx:
+    image: rareloop/volker:nginx
+    container_name: vueplayground-nginx
+    environment:
+      DOCUMENT_ROOT: public
+      APP_URL: vueplayground.volker.test
+      SHARED_URL: # placeholder for when sharing with NGROK
+    tty: true
+    volumes:
+      # Using direct docker mounts
+      - ./:/var/www:delegated
+    expose:
+      - 80
+    networks:
+      - internal
+      - traefik-network
+    # Configure with traefik to serve on a domain name
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-network
+      - traefik.http.routers.vueplayground-router.rule=Host(`vueplayground.volker.test`)
+
+  # Redis for fast database caches
+  redis:
+      image: redis:latest
+      container_name: vueplayground-redis
+      tty: true
+      networks:
+        - internal
+
+  # Cron for the jobs like the Laravel scheduler
+  # cron:
+  #   image: rareloop/volker:php-81
+  #   container_name: vueplayground-cron
+  #   command: /run-scheduler.sh
+  #   tty: true
+  #   working_dir: /var/www
+  #   volumes:
+  #     # Using direct docker mounts
+  #     - ./:/var/www:delegated
+  #   networks:
+  #     - internal
+
+  # Laravel Horizon for monitoring the jobs queue
+  # horizon:
+  #   image: rareloop/volker:php-81
+  #   container_name: vueplayground-horizon
+  #   command: php artisan horizon
+  #   tty: true
+  #   working_dir: /var/www
+  #   volumes:
+  #     # Using direct do cker mounts
+  #     - ./:/var/www:delegated
+  #   networks:
+  #     - internal
+

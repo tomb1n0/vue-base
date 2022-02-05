@@ -1,0 +1,19 @@
+{
+    "app_url": "vueplayground.volker.test",
+    "composer_version": "2",
+    "cors": false,
+    "cron": false,
+    "document_root": "public",
+    "extra_hosts": "",
+    "horizon": false,
+    "php_version": "php-81",
+    "project_name": "vueplayground",
+    "project_type": "laravel",
+    "redis": true,
+    "scripts": {
+        "coverage": "volker phpcoverage coverage\/html",
+        "dependencies": "volker composer install",
+        "tests": "volker phpunit"
+    },
+    "volker_version": "0.6.5"
+}
